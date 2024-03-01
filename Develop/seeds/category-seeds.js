@@ -1,23 +1,36 @@
+const sequelize = require('../config/connection');
 const { Category } = require('../models');
 
-const categoryData = [
-  {
-    category_name: 'Shirts',
-  },
-  {
-    category_name: 'Shorts',
-  },
-  {
-    category_name: 'Music',
-  },
-  {
-    category_name: 'Hats',
-  },
-  {
-    category_name: 'Shoes',
-  },
-];
+const seedCategories = async () => {
+  await Category.bulkCreate([
+    { category_name: 'Category 1' },
+    { category_name: 'Category 2' },
+    { category_name: 'Category 3' },
+  ]);
+};
 
-const seedCategories = () => Category.bulkCreate(categoryData);
+const seedProducts = async () => {
+  // Define and implement the seedProducts function
+};
 
-module.exports = seedCategories;
+const seedTags = async () => {
+  // Define and implement the seedTags function
+};
+
+const seedAll = async () => {
+  await sequelize.sync({ force: true });
+  console.log('\n----- DATABASE SYNCED -----\n');
+
+  await seedCategories();
+  console.log('\n----- CATEGORIES SEEDED -----\n');
+
+  await seedProducts();
+  console.log('\n----- PRODUCTS SEEDED -----\n');
+
+  await seedTags();
+  console.log('\n----- TAGS SEEDED -----\n');
+
+  process.exit(0);
+};
+
+seedAll();

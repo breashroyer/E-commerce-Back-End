@@ -1,20 +1,21 @@
-// import models
+const Sequelize = require('sequelize');
+const sequelize = require('../config/connection'); // Adjust the path as necessary
+
+const Category = require('./Category'); // Remove function call
 const Product = require('./Product');
-const Category = require('./Category');
 const Tag = require('./Tag');
 const ProductTag = require('./ProductTag');
 
-// Products belongsTo Category
+// Define associations here
+Product.belongsTo(Category, { foreignKey: 'category_id' });
+Category.hasMany(Product, { foreignKey: 'category_id' });
 
-// Categories have many Products
-
-// Products belongToMany Tags (through ProductTag)
-
-// Tags belongToMany Products (through ProductTag)
+Product.belongsToMany(Tag, { through: ProductTag, foreignKey: 'product_id' });
+Tag.belongsToMany(Product, { through: ProductTag, foreignKey: 'tag_id' });
 
 module.exports = {
-  Product,
   Category,
+  Product,
   Tag,
   ProductTag,
 };
